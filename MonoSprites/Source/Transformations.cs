@@ -10,10 +10,10 @@
 #endregion
 using Microsoft.Xna.Framework;
 
-namespace MonoSprite
+namespace MonoSprites
 {
     /// <summary>
-    /// Renderable transformations - position, scale, rotation.
+    /// Renderable transformations - position, scale, rotation, color, etc.
     /// </summary>
     public class Transformation
     {

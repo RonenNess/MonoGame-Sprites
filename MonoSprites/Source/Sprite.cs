@@ -10,7 +10,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoSprite
+namespace MonoSprites
 {
     /// <summary>
     /// Basic sprite entity (renderable image).

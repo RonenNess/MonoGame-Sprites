@@ -11,8 +11,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace MonoSprite
+namespace MonoSprites
 {
+    /// <summary>
+    /// MonoSprites is the main namespace that contains all the MonoGame-Sprites entities.
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
     /// <summary>
     /// A renderable entity.
     /// </summary>

@@ -13,17 +13,17 @@ namespace MonoSprites
         SpriteBatch spriteBatch;
 
         // test sprite parts
-        MonoSprite.Container container;
-        MonoSprite.Sprite spriteHead;
-        MonoSprite.Sprite spriteBody;
-        MonoSprite.Sprite spriteFrontHand;
-        MonoSprite.Sprite spriteFrontPalm;
-        MonoSprite.Sprite spriteBackHand;
-        MonoSprite.Sprite spriteBackPalm;
-        MonoSprite.Sprite spriteFrontLeg;
-        MonoSprite.Sprite spriteFrontFoot;
-        MonoSprite.Sprite spriteBackLeg;
-        MonoSprite.Sprite spriteBackFoot;
+        MonoSprites.Container container;
+        MonoSprites.Sprite spriteHead;
+        MonoSprites.Sprite spriteBody;
+        MonoSprites.Sprite spriteFrontHand;
+        MonoSprites.Sprite spriteFrontPalm;
+        MonoSprites.Sprite spriteBackHand;
+        MonoSprites.Sprite spriteBackPalm;
+        MonoSprites.Sprite spriteFrontLeg;
+        MonoSprites.Sprite spriteFrontFoot;
+        MonoSprites.Sprite spriteBackLeg;
+        MonoSprites.Sprite spriteBackFoot;
 
         /// <summary>
         /// Create the game instance.
@@ -46,17 +46,17 @@ namespace MonoSprites
 
             // init sprite parts.
             // note: normally you would load this part from a json or xml file.
-            container = new MonoSprite.Container();
-            spriteBody = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/body"), zindex: 0.1f, parent: container);
-            spriteHead = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/head"), position: new Vector2(-10, -120), zindex: 0.2f, parent: spriteBody);
-            spriteFrontHand = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/front_hand"), position: new Vector2(36, -55), origin: new Vector2(0.3f, 0.28f), zindex: 0.25f, parent: spriteBody);
-            spriteFrontPalm = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/front_palm"), position: new Vector2(34, 50), origin: new Vector2(0.7f, 0.07f), zindex: 0.01f, parent: spriteFrontHand);
-            spriteBackHand = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/back_hand"), position: new Vector2(-45, -70), origin: new Vector2(0.6f, 0.12f), zindex: -0.1f, parent: spriteBody);
-            spriteBackPalm = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/back_palm"), position: new Vector2(-14, 72), origin: new Vector2(0.8f, 0.08f), zindex: -0.01f, parent: spriteBackHand);
-            spriteFrontLeg = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/front_leg"), position: new Vector2(15, 75), origin: new Vector2(0.27f, 0.16f), zindex: 0.15f, parent: spriteBody);
-            spriteFrontFoot = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/front_foot"), position: new Vector2(50, 165), origin: new Vector2(0.67f, 0.36f), zindex: -0.01f, parent: spriteFrontLeg);
-            spriteBackLeg = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/back_leg"), position: new Vector2(-34, 82), origin: new Vector2(0.56f, 0.16f), zindex: -0.15f, parent: spriteBody);
-            spriteBackFoot = new MonoSprite.Sprite(Content.Load<Texture2D>("sprite/back_foot"), position: new Vector2(0, 140), origin: new Vector2(0.8f, 0.18f), zindex: -0.01f, parent: spriteBackLeg);
+            container = new MonoSprites.Container();
+            spriteBody = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/body"), zindex: 0.1f, parent: container);
+            spriteHead = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/head"), position: new Vector2(-10, -120), zindex: 0.2f, parent: spriteBody);
+            spriteFrontHand = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/front_hand"), position: new Vector2(36, -55), origin: new Vector2(0.3f, 0.28f), zindex: 0.25f, parent: spriteBody);
+            spriteFrontPalm = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/front_palm"), position: new Vector2(34, 50), origin: new Vector2(0.7f, 0.07f), zindex: 0.01f, parent: spriteFrontHand);
+            spriteBackHand = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/back_hand"), position: new Vector2(-45, -70), origin: new Vector2(0.6f, 0.12f), zindex: -0.1f, parent: spriteBody);
+            spriteBackPalm = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/back_palm"), position: new Vector2(-14, 72), origin: new Vector2(0.8f, 0.08f), zindex: -0.01f, parent: spriteBackHand);
+            spriteFrontLeg = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/front_leg"), position: new Vector2(15, 75), origin: new Vector2(0.27f, 0.16f), zindex: 0.15f, parent: spriteBody);
+            spriteFrontFoot = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/front_foot"), position: new Vector2(50, 165), origin: new Vector2(0.67f, 0.36f), zindex: -0.01f, parent: spriteFrontLeg);
+            spriteBackLeg = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/back_leg"), position: new Vector2(-34, 82), origin: new Vector2(0.56f, 0.16f), zindex: -0.15f, parent: spriteBody);
+            spriteBackFoot = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/back_foot"), position: new Vector2(0, 140), origin: new Vector2(0.8f, 0.18f), zindex: -0.01f, parent: spriteBackLeg);
 
             // set sprite position and general scale
             container.ScaleScalar = 0.7f;
