@@ -12,7 +12,7 @@ To see a live example, open and execute the solution in this repo.
 ## Using MonoGame-Sprites
 
 ### Install
-Just copy the files inside ```/Source/``` into your project and you're good to go.
+Just copy the files inside ```MonoSprites/Source/``` into your project and you're good to go.
 
 ### Main objects
 This lib contains 4 main classes you should know:
@@ -62,7 +62,7 @@ MonoSprites.Sprite sprite = new MonoSprites.Sprite(Content.Load<Texture2D>("spri
 
 Now every transformation you apply on the container will also affect the child sprite.
 
-For more info you can check out the code (with focus on the Renderable and Sprite public API), or read the automatically generated doc file in ```Help/```.
+For more info you can check out the code (with focus on the Renderable and Sprite public API), or read the automatically generated doc file in ```MonoSprites/Help/```.
 
 ## Lisence
 MonoGame-Sprites is distributed with the permissive MIT License. For more info, check out the ```LICENSE``` file in this repo.
