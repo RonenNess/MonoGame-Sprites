@@ -3,7 +3,7 @@
 // A container to hold other renderable entities.
 //
 // Author: Ronen Ness.
-// Since: 2016.
+// Since: 2017.
 //-----------------------------------------------------------------------------
 #endregion
 
