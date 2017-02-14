@@ -12,7 +12,14 @@ To see a live example, open and execute the solution in this repo.
 ## Using MonoGame-Sprites
 
 ### Install
-Just copy the files inside ```MonoSprites/Source/``` into your project and you're good to go.
+
+To install the lib you can use NuGet:
+
+```
+Install-Package MonoGame.Sprites
+```
+
+Or instead you can manually copy the source files from ```MonoSprites/Source/``` into your project.
 
 ### Main objects
 This lib contains 4 main classes you should know:
