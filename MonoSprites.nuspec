@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+	<id>MonoGame.Sprites</id>
+	<version>1.0.0.0</version>
+	<authors>Ronen Ness</authors>
+	<owners>RonenNess</owners>
+	<licenseUrl>https://en.wikipedia.org/wiki/MIT_License</licenseUrl>
+	<projectUrl>https://github.com/RonenNess/MonoGame-Sprites</projectUrl>
+	<iconUrl>https://raw.githubusercontent.com/RonenNess/MonoGame-Sprites/master/icon.png</iconUrl>
+	<requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<releaseNotes>Stable version with basic sprites and containers hierarchy and transformations.</releaseNotes>
+	<description>Sprites with bone-like hierarchy Transformations for MonoGame projects.</description>
+	<tags>monogame sprite gamedev bones animations</tags>
+	<dependencies>
+	</dependencies>
+  </metadata>
+  <files>
+	<file src="readme.txt" target="" />
+	<file src="MonoSprites\bin\DesktopGL\x86\Release\MonoSprites.dll" target="lib\ronenness\MonoSprites.dll"/>
+  </files>
+</package>
