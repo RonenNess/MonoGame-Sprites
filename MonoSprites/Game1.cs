@@ -166,6 +166,9 @@ namespace MonoSprites
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            // rotate the whole guy
+            container.Rotation += 0.001f;
+
             // draw the sprite
             RasterizerState rasterStrate = new RasterizerState();
             rasterStrate.CullMode = CullMode.None;
