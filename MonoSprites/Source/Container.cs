@@ -7,6 +7,8 @@
 //-----------------------------------------------------------------------------
 #endregion
 
+using Microsoft.Xna.Framework.Graphics;
+
 namespace MonoSprites
 {
     /// <summary>

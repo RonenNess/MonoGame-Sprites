@@ -87,6 +87,28 @@ namespace MonoSprites
             return ret;
         }
 
+
+        /// <summary>
+        /// Determine if the world point falls within the sprite's bounds.
+        /// </summary>
+        public bool Contains(Vector2 point)
+        {
+            // Need to consider origin.
+            // Need to consider scale.
+            point = WorldTransformations.Localize(point);
+
+            Vector2 origin = new Vector2(Position.X * Origin.X, Position.Y * Origin.Y);
+
+            point += origin;
+
+            if (point.X >= 0 && point.X <= Size.X && point.Y >= 0 && point.Y <= Size.Y)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Draw the sprite itself.
         /// </summary>
@@ -120,13 +142,16 @@ namespace MonoSprites
 
             // draw the sprite
             spriteBatch.Draw(
-                Texture,
+                texture: Texture,
                 rotation: WorldTransformations.Rotation,
                 position: WorldTransformations.Position,
                 scale: scale,
                 origin: origin,
                 color: WorldTransformations.Color,
-                layerDepth: zindex);
+                layerDepth: zindex,
+                effects: SpriteEffects.None,
+                sourceRectangle: null
+            );
         }
     }
 }
