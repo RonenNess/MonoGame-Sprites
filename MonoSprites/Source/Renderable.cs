@@ -206,7 +206,7 @@ namespace MonoSprites
         /// This will also update transformations if needed.
         /// </summary>
         /// <param name="spriteBatch">Spritebatch to use for drawing.</param>
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             // not visible? skip!
             if (!Visible)
