@@ -93,11 +93,9 @@ namespace MonoSprites
         /// </summary>
         public bool Contains(Vector2 point)
         {
-            // Need to consider origin.
-            // Need to consider scale.
             point = WorldTransformations.Localize(point);
 
-            Vector2 origin = new Vector2(Position.X * Origin.X, Position.Y * Origin.Y);
+            Vector2 origin = new Vector2(Size.X * Origin.X, Size.Y * Origin.Y);
 
             point += origin;
 
