@@ -66,20 +66,26 @@ namespace MonoSprites
         }
 
         /// <summary>
-        /// Clone this sprite.
+        /// Clone this sprite object.
         /// </summary>
-        /// <returns>Clonsed sprite.</returns>
-        public Sprite Clone()
+        /// <param name="includeChildren">If true, will include children in clone.</param>
+        /// <returns>Cloned object.</returns>
+        override public Renderable Clone(bool includeChildren)
         {
-            Sprite ret = new Sprite();
-            ret.SourceRectangle = SourceRectangle;
-            ret.Origin = Origin;
-            ret.Texture = Texture;
-            ret.Size = Size;
-            ret.Visible = Visible;
-            ret.Zindex = Zindex;
-            ret._localTrans = _localTrans.Clone();
-            return ret;
+            return new Sprite(this, includeChildren);
+        }
+
+        /// <summary>
+        /// Clone an existing Sprite object.
+        /// </summary>
+        /// <param name="copyFrom">Sprite to copy properties from.</param>
+        /// <param name="includeChildren">If true, will also clone children.</param>
+        public Sprite(Sprite copyFrom, bool includeChildren) : base(copyFrom, includeChildren)
+        {
+            SourceRectangle = copyFrom.SourceRectangle;
+            Origin = copyFrom.Origin;
+            Texture = copyFrom.Texture;
+            Size = copyFrom.Size;
         }
 
         /// <summary>

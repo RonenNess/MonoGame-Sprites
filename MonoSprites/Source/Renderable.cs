@@ -58,8 +58,10 @@ namespace MonoSprites
         // do we need to update transformations?
         private bool _needUpdateTransformations = false;
 
-        // children entities of this renderable.
-        private List<Renderable> _children = new List<Renderable>();
+        /// <summary>
+        /// Child entities.
+        /// </summary>
+        protected List<Renderable> _children = new List<Renderable>();
 
         /// <summary>
         /// String identifier you can attach to renderable entities.
@@ -241,6 +243,38 @@ namespace MonoSprites
         /// <param name="zindex">Final rendering zindex.</param>
         protected virtual void DoDraw(SpriteBatch spriteBatch, float zindex)
         {
+        }
+
+        /// <summary>
+        /// Clone this renderable object.
+        /// </summary>
+        /// <param name="includeChildren">If true, will include children in clone.</param>
+        /// <returns>Cloned object.</returns>
+        virtual public Renderable Clone(bool includeChildren)
+        {
+            return new Renderable(this, includeChildren);
+        }
+
+        /// <summary>
+        /// Clone an existing renderable object.
+        /// </summary>
+        /// <param name="copyFrom">Object to copy properties from.</param>
+        /// <param name="includeChildren">If true, will also clone children.</param>
+        public Renderable(Renderable copyFrom, bool includeChildren)
+        {
+            // copy basics
+            Visible = copyFrom.Visible;
+            Zindex = copyFrom.Zindex;
+            _localTrans = copyFrom._localTrans.Clone();
+
+            // clone children
+            if (includeChildren)
+            {
+                foreach (var child in copyFrom._children)
+                {
+                    AddChild(child.Clone(true));
+                }
+            }
         }
     }
 }
