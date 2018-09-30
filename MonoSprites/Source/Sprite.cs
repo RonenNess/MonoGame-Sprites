@@ -18,12 +18,6 @@ namespace MonoSprites
     public class Sprite : Renderable
     {
         /// <summary>
-        /// Texture source rectangle (in pixels).
-        /// This also affect drawing size, unless the Size property is set.
-        /// </summary>
-        Rectangle _srcRect;
-
-        /// <summary>
         /// Sprite origin / source, eg pivot point for rotation etc.
         /// </summary>
         public Vector2 Origin = Vector2.One * 0.5f;
@@ -39,13 +33,15 @@ namespace MonoSprites
         public Point Size { get; set; }
 
         /// <summary>
+        /// Optional texture source rectangle.
+        /// </summary>
+        public Rectangle? SourceRectangle;
+
+        /// <summary>
         /// Create the new sprite entity.
         /// </summary>
         public Sprite() : base()
         {
-            _srcRect = new Rectangle(0, 0, 0, 0);
-            Size = Point.Zero;
-            Texture = null;
         }
 
         /// <summary>
@@ -60,7 +56,6 @@ namespace MonoSprites
         /// <param name="parent">Parent container.</param>
         public Sprite(Texture2D texture, Point? size = null, Vector2? origin = null, Vector2? position = null, Color? color = null, float zindex = 0f, Renderable parent = null) : base()
         {
-            _srcRect = new Rectangle(0, 0, 0, 0);
             Size = size ?? Point.Zero;
             Texture = texture;
             Origin = origin ?? Vector2.One * 0.5f;
@@ -77,7 +72,7 @@ namespace MonoSprites
         public Sprite Clone()
         {
             Sprite ret = new Sprite();
-            ret._srcRect = _srcRect;
+            ret.SourceRectangle = SourceRectangle;
             ret.Origin = Origin;
             ret.Texture = Texture;
             ret.Size = Size;
@@ -102,6 +97,7 @@ namespace MonoSprites
             }
 
             // if source rect is 0,0, set to texture default size
+            var _srcRect = SourceRectangle ?? new Rectangle(0, 0, 0, 0);
             if (_srcRect.Width == 0) { _srcRect.Width = Texture.Width; }
             if (_srcRect.Height == 0) { _srcRect.Height = Texture.Height; }
 
@@ -118,14 +114,21 @@ namespace MonoSprites
                 scale.Y *= (float)Size.Y / Texture.Height;
             }
 
+            // set flips
+            var effects = SpriteEffects.None;
+            if (scale.X < 0) effects |= SpriteEffects.FlipHorizontally;
+            if (scale.Y < 0) effects |= SpriteEffects.FlipVertically;
+
             // draw the sprite
             spriteBatch.Draw(
-                Texture,
-                rotation: WorldTransformations.Rotation,
+                texture: Texture,
                 position: WorldTransformations.Position,
-                scale: scale,
-                origin: origin,
+                sourceRectangle: _srcRect,
                 color: WorldTransformations.Color,
+                rotation: WorldTransformations.Rotation,
+                origin: origin,
+                scale: new Vector2(System.Math.Abs(scale.X), System.Math.Abs(scale.Y)),
+                effects: effects,
                 layerDepth: zindex);
         }
     }
