@@ -29,7 +29,7 @@ namespace MonoSprites
         /// <summary>
         /// Parent entity.
         /// </summary>
-        protected Renderable _parent { get; set; }
+        protected Renderable _parent { get; set; } = null;
 
         /// <summary>
         /// Local transformations (color, position, rotation..).
@@ -50,7 +50,7 @@ namespace MonoSprites
         /// <summary>
         /// Is the entity currently visible?
         /// </summary>
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         // currently calculated z-index, including parents.
         private float _finalZindex = 0f;
@@ -116,7 +116,7 @@ namespace MonoSprites
         /// Renderable z-index (relative to parent).
         /// </summary>
         public float Zindex { get { return _zindex; } set { _zindex = value; UpdateTransformations(); } }
-        private float _zindex;
+        private float _zindex = 0f;
 
         /// <summary>
         /// Renderable tint color.
@@ -128,12 +128,6 @@ namespace MonoSprites
         /// </summary>
         public Renderable()
         {
-            _parent = null;
-            Position = Vector2.Zero;
-            ScaleScalar = 1f;
-            Zindex = 0f;
-            Visible = true;
-            Color = Color.White;
         }
 
         /// <summary>
@@ -162,6 +156,16 @@ namespace MonoSprites
 
             // update child transformations (since now it got a new parent)
             child.UpdateTransformations();
+        }
+
+        /// <summary>
+        /// Get child by index.
+        /// </summary>
+        /// <param name="index">Child index to get.</param>
+        /// <returns>Return child.</returns>
+        public Renderable GetChild(int index)
+        {
+            return _children[index];
         }
 
         /// <summary>
@@ -275,6 +279,9 @@ namespace MonoSprites
                     AddChild(child.Clone(true));
                 }
             }
+
+            // update transformations
+            UpdateTransformations();
         }
     }
 }
