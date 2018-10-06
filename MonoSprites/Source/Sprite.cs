@@ -136,6 +136,13 @@ namespace MonoSprites
             if (scale.X < 0) effects |= SpriteEffects.FlipHorizontally;
             if (scale.Y < 0) effects |= SpriteEffects.FlipVertically;
 
+            // normalize z-index
+            if (NormalizeZindex)
+            {
+                if (zindex < 0f) zindex = 0f;
+                zindex /= float.MaxValue;
+            }
+
             // draw the sprite
             spriteBatch.Draw(
                 texture: Texture,

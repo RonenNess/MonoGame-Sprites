@@ -124,6 +124,11 @@ namespace MonoSprites
         public Color Color { get { return _localTrans.Color; } set { _localTrans.Color = value; UpdateTransformations(); } }
 
         /// <summary>
+        /// If true, will normalize Z-index to always be between 0-1 values (note: this divide the final z-index by max float).
+        /// </summary>
+        public bool NormalizeZindex = false;
+
+        /// <summary>
         /// Create the new renderable entity with default values.
         /// </summary>
         public Renderable()
