@@ -38,6 +38,11 @@ namespace MonoSprites
         public Rectangle? SourceRectangle;
 
         /// <summary>
+        /// If true, will also flip rotation on X and Y axis when there's a flip.
+        /// </summary>
+        public bool EnableRotationFlip = false;
+
+        /// <summary>
         /// Create the new sprite entity.
         /// </summary>
         public Sprite() : base()
@@ -131,10 +136,31 @@ namespace MonoSprites
                 scale.Y *= (float)Size.Y / Texture.Height;
             }
 
+            // get rotation
+            var rotation = WorldTransformations.Rotation;
+
             // set flips
             var effects = SpriteEffects.None;
-            if (scale.X < 0) effects |= SpriteEffects.FlipHorizontally;
-            if (scale.Y < 0) effects |= SpriteEffects.FlipVertically;
+            if (scale.X < 0 || scale.Y < 0)
+            {
+                var rotationVector = EnableRotationFlip ? new Vector2((float)System.Math.Cos(rotation), (float)System.Math.Sin(rotation)) : Vector2.One;
+                if (scale.X < 0)
+                {
+                    effects |= SpriteEffects.FlipHorizontally;
+                    rotationVector.X = -rotationVector.X;
+                }
+                if (scale.Y < 0)
+                {
+                    effects |= SpriteEffects.FlipVertically;
+                    rotationVector.Y = -rotationVector.Y;
+                }
+
+                // fix rotation
+                if (EnableRotationFlip)
+                {
+                    rotation = (float)System.Math.Atan2(rotationVector.Y, rotationVector.X);
+                }
+            }
 
             // normalize z-index
             if (NormalizeZindex)
@@ -149,7 +175,7 @@ namespace MonoSprites
                 position: WorldTransformations.Position,
                 sourceRectangle: _srcRect,
                 color: WorldTransformations.Color,
-                rotation: WorldTransformations.Rotation,
+                rotation: rotation,
                 origin: origin,
                 scale: new Vector2(System.Math.Abs(scale.X), System.Math.Abs(scale.Y)),
                 effects: effects,

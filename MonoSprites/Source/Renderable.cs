@@ -78,6 +78,10 @@ namespace MonoSprites
                 _localTrans.Scale.X = System.Math.Abs(_localTrans.Scale.X) * (value ? -1f : 1f);
                 UpdateTransformations();
             }
+            get
+            {
+                return _localTrans.Scale.X < 0f;
+            }
         }
 
         /// <summary>
@@ -89,6 +93,10 @@ namespace MonoSprites
             {
                 _localTrans.Scale.Y = System.Math.Abs(_localTrans.Scale.Y) * (value ? -1f : 1f);
                 UpdateTransformations();
+            }
+            get
+            {
+                return _localTrans.Scale.Y < 0f;
             }
         }
 
