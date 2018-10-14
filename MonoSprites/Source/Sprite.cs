@@ -105,6 +105,18 @@ namespace MonoSprites
         }
 
         /// <summary>
+        /// Set a source rectangle from spritesheet.
+        /// </summary>
+        /// <param name="index">Sprite index to pick.</param>
+        /// <param name="spritesCount">Number of sprites on X and Y axis.</param>
+        /// <param name="rectSize">Size of the rectangle to set based on number of sprites in sheet.</param>
+        public void SetSourceFromSpritesheet(Point index, Point spritesCount, Point rectSize)
+        {
+            Point size = Texture.Bounds.Size / spritesCount;
+            SourceRectangle = new Rectangle(index * size, size * rectSize);
+        }
+
+        /// <summary>
         /// Draw the sprite itself.
         /// </summary>
         /// <remarks>When this function is called, transformation is already applied (position / scale / rotation).</remarks>
