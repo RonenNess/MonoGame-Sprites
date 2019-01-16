@@ -18,12 +18,6 @@ namespace MonoSprites
     public class Sprite : Renderable
     {
         /// <summary>
-        /// Texture source rectangle (in pixels).
-        /// This also affect drawing size, unless the Size property is set.
-        /// </summary>
-        Rectangle _srcRect;
-
-        /// <summary>
         /// Sprite origin / source, eg pivot point for rotation etc.
         /// </summary>
         public Vector2 Origin = Vector2.One * 0.5f;
@@ -39,13 +33,20 @@ namespace MonoSprites
         public Point Size { get; set; }
 
         /// <summary>
+        /// Optional texture source rectangle.
+        /// </summary>
+        public Rectangle? SourceRectangle;
+
+        /// <summary>
+        /// If true, will also flip rotation on X and Y axis when there's a flip.
+        /// </summary>
+        public bool EnableRotationFlip = false;
+
+        /// <summary>
         /// Create the new sprite entity.
         /// </summary>
         public Sprite() : base()
         {
-            _srcRect = new Rectangle(0, 0, 0, 0);
-            Size = Point.Zero;
-            Texture = null;
         }
 
         /// <summary>
@@ -60,7 +61,6 @@ namespace MonoSprites
         /// <param name="parent">Parent container.</param>
         public Sprite(Texture2D texture, Point? size = null, Vector2? origin = null, Vector2? position = null, Color? color = null, float zindex = 0f, Renderable parent = null) : base()
         {
-            _srcRect = new Rectangle(0, 0, 0, 0);
             Size = size ?? Point.Zero;
             Texture = texture;
             Origin = origin ?? Vector2.One * 0.5f;
@@ -71,20 +71,49 @@ namespace MonoSprites
         }
 
         /// <summary>
-        /// Clone this sprite.
+        /// Clone this sprite object.
         /// </summary>
-        /// <returns>Clonsed sprite.</returns>
-        public Sprite Clone()
+        /// <param name="includeChildren">If true, will include children in clone.</param>
+        /// <returns>Cloned object.</returns>
+        override public Renderable Clone(bool includeChildren)
         {
-            Sprite ret = new Sprite();
-            ret._srcRect = _srcRect;
-            ret.Origin = Origin;
-            ret.Texture = Texture;
-            ret.Size = Size;
-            ret.Visible = Visible;
-            ret.Zindex = Zindex;
-            ret._localTrans = _localTrans.Clone();
-            return ret;
+            return new Sprite(this, includeChildren);
+        }
+
+        /// <summary>
+        /// Clone an existing Sprite object.
+        /// </summary>
+        /// <param name="copyFrom">Sprite to copy properties from.</param>
+        /// <param name="includeChildren">If true, will also clone children.</param>
+        public Sprite(Sprite copyFrom, bool includeChildren) : base(copyFrom, includeChildren)
+        {
+            SourceRectangle = copyFrom.SourceRectangle;
+            Origin = copyFrom.Origin;
+            Texture = copyFrom.Texture;
+            Size = copyFrom.Size;
+        }
+
+        /// <summary>
+        /// Set a source rectangle from spritesheet.
+        /// </summary>
+        /// <param name="index">Sprite index to pick.</param>
+        /// <param name="spritesCount">Number of sprites on X and Y axis.</param>
+        public void SetSourceFromSpritesheet(Point index, Point spritesCount)
+        {
+            Point size = Texture.Bounds.Size / spritesCount;
+            SourceRectangle = new Rectangle(index * size, size);
+        }
+
+        /// <summary>
+        /// Set a source rectangle from spritesheet.
+        /// </summary>
+        /// <param name="index">Sprite index to pick.</param>
+        /// <param name="spritesCount">Number of sprites on X and Y axis.</param>
+        /// <param name="rectSize">Size of the rectangle to set based on number of sprites in sheet.</param>
+        public void SetSourceFromSpritesheet(Point index, Point spritesCount, Point rectSize)
+        {
+            Point size = Texture.Bounds.Size / spritesCount;
+            SourceRectangle = new Rectangle(index * size, size * rectSize);
         }
 
 
@@ -122,6 +151,7 @@ namespace MonoSprites
             }
 
             // if source rect is 0,0, set to texture default size
+            var _srcRect = SourceRectangle ?? new Rectangle(0, 0, 0, 0);
             if (_srcRect.Width == 0) { _srcRect.Width = Texture.Width; }
             if (_srcRect.Height == 0) { _srcRect.Height = Texture.Height; }
 
@@ -138,17 +168,50 @@ namespace MonoSprites
                 scale.Y *= (float)Size.Y / Texture.Height;
             }
 
+            // get rotation
+            var rotation = WorldTransformations.Rotation;
+
+            // set flips
+            var effects = SpriteEffects.None;
+            if (scale.X < 0 || scale.Y < 0)
+            {
+                var rotationVector = EnableRotationFlip ? new Vector2((float)System.Math.Cos(rotation), (float)System.Math.Sin(rotation)) : Vector2.One;
+                if (scale.X < 0)
+                {
+                    effects |= SpriteEffects.FlipHorizontally;
+                    rotationVector.X = -rotationVector.X;
+                }
+                if (scale.Y < 0)
+                {
+                    effects |= SpriteEffects.FlipVertically;
+                    rotationVector.Y = -rotationVector.Y;
+                }
+
+                // fix rotation
+                if (EnableRotationFlip)
+                {
+                    rotation = (float)System.Math.Atan2(rotationVector.Y, rotationVector.X);
+                }
+            }
+
+            // normalize z-index
+            if (NormalizeZindex)
+            {
+                if (zindex < 0f) zindex = 0f;
+                zindex /= float.MaxValue;
+            }
+
             // draw the sprite
             spriteBatch.Draw(
                 texture: Texture,
                 rotation: WorldTransformations.Rotation,
                 position: WorldTransformations.Position,
-                scale: scale,
-                origin: origin,
+                sourceRectangle: _srcRect,
                 color: WorldTransformations.Color,
-                layerDepth: zindex,
-                effects: SpriteEffects.None,
-                sourceRectangle: null
+                origin: origin,
+                scale: new Vector2(System.Math.Abs(scale.X), System.Math.Abs(scale.Y)),
+                effects: effects,
+                layerDepth: zindex
             );
         }
     }

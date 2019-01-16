@@ -57,7 +57,7 @@ namespace MonoSprites
             spriteFrontFoot = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/front_foot"), position: new Vector2(50, 165), origin: new Vector2(0.67f, 0.36f), zindex: -0.01f, parent: spriteFrontLeg);
             spriteBackLeg = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/back_leg"), position: new Vector2(-34, 82), origin: new Vector2(0.56f, 0.16f), zindex: -0.15f, parent: spriteBody);
             spriteBackFoot = new MonoSprites.Sprite(Content.Load<Texture2D>("sprite/back_foot"), position: new Vector2(0, 140), origin: new Vector2(0.8f, 0.18f), zindex: -0.01f, parent: spriteBackLeg);
-
+            
             // set sprite position and general scale
             container.ScaleScalar = 0.7f;
             container.Position = new Vector2(400, 200);
