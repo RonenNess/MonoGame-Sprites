@@ -60,6 +60,21 @@ namespace MonoSprites
         }
 
         /// <summary>
+        /// Transforms the world point to a local plane.
+        /// </summary>
+        /// <returns>The localized point.</returns>
+        public Vector2 Localize(Vector2 point) {
+            Vector2 result = point;
+
+            result -= Position;
+            result /= Scale;
+
+            result = Vector2.Transform(result, Matrix.CreateRotationZ(-1 * Rotation * System.Math.Sign(Scale.X)));
+
+            return result;
+        }
+
+        /// <summary>
         /// Multiply two colors and return the result.
         /// </summary>
         /// <param name="a">Color a to multiply.</param>

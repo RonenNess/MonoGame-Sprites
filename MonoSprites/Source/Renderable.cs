@@ -9,6 +9,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace MonoSprites
@@ -67,6 +68,16 @@ namespace MonoSprites
         /// String identifier you can attach to renderable entities.
         /// </summary>
         public string Identifier { get; set; }
+
+        /// <summary>
+        /// Return list of children.
+        /// </summary>
+        public List<Renderable> Children { get { return _children; } }
+
+        /// <summary>
+        /// Return list of children.
+        /// </summary>
+        public Renderable Parent { get { return _parent; } }
 
         /// <summary>
         /// Should we flip drawing on X axis?
@@ -260,6 +271,34 @@ namespace MonoSprites
         /// <param name="zindex">Final rendering zindex.</param>
         protected virtual void DoDraw(SpriteBatch spriteBatch, float zindex)
         {
+        }
+
+        /// <summary>
+        /// Filter the tree.
+        /// </summary>
+        public void Traverse(Action<Renderable> apply, Type filter = null) {
+            Traverse(apply, this, filter);
+        }
+
+        /// <summary>
+        /// Filter the tree.
+        /// </summary>
+        public static void Traverse(Action<Renderable> apply, Renderable current, Type filter = null)
+        {
+            if (filter == null) {
+                filter = typeof(Renderable);
+            }
+
+            if (current.GetType() == filter || current.GetType().IsSubclassOf(filter))
+            {
+                apply(current);
+            }
+
+
+            foreach (Renderable child in current.Children)
+            {
+                Traverse(apply, child, filter);
+            }
         }
 
         /// <summary>
